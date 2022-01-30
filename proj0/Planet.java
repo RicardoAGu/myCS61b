@@ -67,22 +67,13 @@ public class Planet {
         return calcForceExertedBy(p) * (p.yyPos - yyPos) / calcDistance(p);
     }
 
-    /** Check if the given planet is just this planet
-     * @param p An existed planet instance
-     */
-    private boolean equals(Planet p){
-        if (!Objects.equals(imgFileName, p.imgFileName)) {
-            return false;
-        } else return xxPos - p.xxPos + yyPos - p.yyPos + xxVel - p.xxVel + yyVel - p.yyVel + mass - p.mass == 0;
-    }
-
     /** Calculate the net force exerted on this planet in the X direction by all the given planets
      * @param galaxy All existed planet instances
      */
     public double calcNetForceExertedByX(Planet[] galaxy) {
         double netForceX = 0.0;
         for (Planet p : galaxy) {
-            if (! equals(p)) {
+            if (! Objects.equals(this, p)) {
                 netForceX += calcForceExertedByX(p);
             }
         }
@@ -95,7 +86,7 @@ public class Planet {
     public double calcNetForceExertedByY(Planet[] galaxy) {
         double netForceY = 0.0;
         for (Planet p : galaxy) {
-            if (! equals(p)) {
+            if (! Objects.equals(this, p)) {
                 netForceY += calcForceExertedByY(p);
             }
         }
