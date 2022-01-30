@@ -8,7 +8,7 @@ public class NBody {
      * @param fileName the name of the .txt file which contains information of planets
      */
     public static double readRadius(String fileName){
-        In in = new In("./data/Planets.txt");
+        In in = new In(fileName);
         in.readInt();
         return in.readDouble();
     }

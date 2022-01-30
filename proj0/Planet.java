@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /** definition of Planets
  * @author RicardoAGu
  */
@@ -68,13 +70,10 @@ public class Planet {
     /** Check if the given planet is just this planet
      * @param p An existed planet instance
      */
-    public boolean equals(Planet p){
-        if (imgFileName != p.imgFileName) {
+    private boolean equals(Planet p){
+        if (!Objects.equals(imgFileName, p.imgFileName)) {
             return false;
-        } else if (xxPos - p.xxPos + yyPos - p.yyPos + xxVel - p.xxVel + yyVel - p.yyVel + mass - p.mass != 0) {
-            return false;
-        }
-        return true;
+        } else return xxPos - p.xxPos + yyPos - p.yyPos + xxVel - p.xxVel + yyVel - p.yyVel + mass - p.mass == 0;
     }
 
     /** Calculate the net force exerted on this planet in the X direction by all the given planets
