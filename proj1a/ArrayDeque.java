@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 /**
  * Implementation of double ended queue using array
  * @author RicardoAGu
@@ -23,13 +21,17 @@ public class ArrayDeque<YourType> {
      * Resize the array so that its usage factor could be always higher than 25%;
      */
     private void resize() {
-        if (((double) size) / arraySize >= 4 & arraySize > 10) {
+        if (((double) size) / arraySize <= 0.25 & arraySize > 10) {
             YourType[] newArray = (YourType[]) new Object[arraySize / 2];
-            System.arraycopy(myArray, 0, newArray, 0, size - (arraySize - pointer) % arraySize);
-            System.arraycopy(myArray, pointer, newArray,(arraySize / 2 - (arraySize - pointer) % arraySize)
-                    % (arraySize / 2), (arraySize - pointer) % arraySize);
+            if (pointer + size > arraySize) {
+                System.arraycopy(myArray, pointer, newArray, 0, arraySize - pointer);
+                System.arraycopy(myArray, 0, newArray, arraySize - pointer,
+                        pointer + size - arraySize);
+            } else {
+                System.arraycopy(myArray, pointer, newArray, 0, size);
+            }
             myArray = newArray;
-            pointer = (arraySize / 2 - (arraySize - pointer) % arraySize) % (arraySize / 2);
+            pointer = 0;
             arraySize = arraySize / 2;
         }
     }
@@ -40,11 +42,15 @@ public class ArrayDeque<YourType> {
     private void doubleSize() {
         if (size == arraySize) {
             YourType[] newArray = (YourType[]) new Object[2 * arraySize];
-            System.arraycopy(myArray, 0, newArray, 0, size - (arraySize - pointer) % arraySize);
-            System.arraycopy(myArray, pointer, newArray, (arraySize * 2 - (arraySize - pointer) % arraySize)
-                    % (arraySize * 2), (arraySize - pointer) % arraySize);
+            if (pointer + size > arraySize) {
+                System.arraycopy(myArray, pointer, newArray, 0, arraySize - pointer);
+                System.arraycopy(myArray, 0, newArray, arraySize - pointer,
+                        pointer + size - arraySize);
+            } else {
+                System.arraycopy(myArray, pointer, newArray, 0, size);
+            }
             myArray = newArray;
-            pointer = (arraySize * 2 - (arraySize - pointer) % arraySize) % (arraySize * 2);
+            pointer = 0;
             arraySize = 2 * arraySize;
         }
     }
@@ -66,7 +72,7 @@ public class ArrayDeque<YourType> {
     public void addLast(YourType item) {
         doubleSize();
         resize();
-        myArray[size - (arraySize - pointer) % arraySize] = item;
+        myArray[(pointer + size) % arraySize] = item;
         size += 1;
     }
 
@@ -117,8 +123,8 @@ public class ArrayDeque<YourType> {
         if (isEmpty()) {
             return null;
         } else {
-            YourType it = myArray[size - (arraySize - pointer) % arraySize - 1];
-            myArray[size - (arraySize - pointer) % arraySize - 1] = null;
+            YourType it = myArray[(pointer + size - 1) % arraySize];
+            myArray[(pointer + size) % arraySize - 1] = null;
             size += -1;
             return it;
         }

@@ -9,14 +9,25 @@ public class LinkedListDeque<YourType> {
     /**
      * Define the every single unit used in our lists.
      */
-    public class Node {
-        public YourType item;
-        public Node next;
-        public Node prev;
-        public Node (YourType it, Node ne, Node pr) {
+    private class Node {
+        YourType item;
+        Node next;
+        Node prev;
+        Node(YourType it, Node ne, Node pr) {
             item = it;
             next = ne;
             prev = pr;
+        }
+
+        /**
+         * help build recursion of nodes.
+         */
+        private YourType recursion(int index) {
+            if (index == 0) {
+                return item;
+            } else {
+                return next.recursion(index - 1);
+            }
         }
     }
 
@@ -73,7 +84,7 @@ public class LinkedListDeque<YourType> {
      */
     public void printDeque() {
         Node n = sentinel;
-        while (! Objects.equals(n.next, sentinel)) {
+        while (!Objects.equals(n.next, sentinel)) {
             System.out.print(n.next.item);
             System.out.print(' ');
             n = n.next;
@@ -121,5 +132,14 @@ public class LinkedListDeque<YourType> {
             n = n.next;
         }
         return n.item;
+    }
+
+    /**
+     * Gets the item at the given index using recursion, where 0 is the front, 1 is the next item, and so forth.
+     * If no such item exists, returns null.
+     * @param index The index of expected item.
+     */
+    public YourType getRecursive(int index) {
+        return sentinel.next.recursion(index);
     }
 }
