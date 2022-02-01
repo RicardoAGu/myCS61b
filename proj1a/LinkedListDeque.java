@@ -5,15 +5,15 @@ import java.util.Objects;
  * @author RicardoAGu
  */
 
-public class LinkedListDeque<YourType> {
+public class LinkedListDeque<T> {
     /**
      * Define the every single unit used in our lists.
      */
     private class Node {
-        YourType item;
+        T item;
         Node next;
         Node prev;
-        Node(YourType it, Node ne, Node pr) {
+        Node(T it, Node ne, Node pr) {
             item = it;
             next = ne;
             prev = pr;
@@ -22,7 +22,7 @@ public class LinkedListDeque<YourType> {
         /**
          * help build recursion of nodes.
          */
-        private YourType recursion(int index) {
+        private T recursion(int index) {
             if (index == 0) {
                 return item;
             } else {
@@ -39,16 +39,16 @@ public class LinkedListDeque<YourType> {
      */
     public LinkedListDeque() {
         size = 0;
-        YourType n = (YourType) new Object();
+        T n = (T) new Object();
         sentinel = new Node(n, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
     }
 
     /**
-     * Adds an item of YourType to the front of the deque.
+     * Adds an item of T to the front of the deque.
      */
-    public void addFirst(YourType item) {
+    public void addFirst(T item) {
         Node n = new Node(item, sentinel.next, sentinel);
         sentinel.next.prev = n;
         sentinel.next = n;
@@ -56,9 +56,9 @@ public class LinkedListDeque<YourType> {
     }
 
     /**
-     * Adds an item of YourType to the back of the deque.
+     * Adds an item of T to the back of the deque.
      */
-    public void addLast(YourType item) {
+    public void addLast(T item) {
         Node n = new Node(item, sentinel, sentinel.prev);
         sentinel.prev.next = n;
         sentinel.prev = n;
@@ -94,11 +94,11 @@ public class LinkedListDeque<YourType> {
     /**
      * Removes and returns the item at the front of the deque. If no such item exists, returns null.
      */
-    public YourType removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         } else {
-            YourType it = sentinel.next.item;
+            T it = sentinel.next.item;
             sentinel.next.next.prev = sentinel;
             sentinel.next = sentinel.next.next;
             size += -1;
@@ -109,11 +109,11 @@ public class LinkedListDeque<YourType> {
     /**
      * Removes and returns the item at the back of the deque. If no such item exists, returns null.
      */
-    public YourType removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         } else {
-            YourType it = sentinel.prev.item;
+            T it = sentinel.prev.item;
             sentinel.prev.prev.next = sentinel;
             sentinel.prev = sentinel.prev.prev;
             size += -1;
@@ -126,7 +126,7 @@ public class LinkedListDeque<YourType> {
      * If no such item exists, returns null.
      * @param index The index of expected item.
      */
-    public YourType get(int index) {
+    public T get(int index) {
         Node n = sentinel;
         for (int i = 0; i <= index; i++) {
             n = n.next;
@@ -135,11 +135,11 @@ public class LinkedListDeque<YourType> {
     }
 
     /**
-     * Gets the item at the given index using recursion, where 0 is the front, 1 is the next item, and so forth.
-     * If no such item exists, returns null.
+     * Gets the item at the given index using recursion, where 0 is the front, 1 is the next item,
+     * and so forth. If no such item exists, returns null.
      * @param index The index of expected item.
      */
-    public YourType getRecursive(int index) {
+    public T getRecursive(int index) {
         return sentinel.next.recursion(index);
     }
 }

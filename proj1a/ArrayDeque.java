@@ -3,18 +3,18 @@
  * @author RicardoAGu
  */
 
-public class ArrayDeque<YourType> {
+public class ArrayDeque<T> {
     private int size;
     private int arraySize = 8;
     private int pointer = 0;
-    private YourType[] myArray;
+    private T[] myArray;
 
     /**
      * Creates an empty linked list deque.
      */
     public ArrayDeque() {
         size = 0;
-        myArray = (YourType[]) new Object[arraySize];
+        myArray = (T[]) new Object[arraySize];
     }
 
     /**
@@ -22,7 +22,7 @@ public class ArrayDeque<YourType> {
      */
     private void resize() {
         if (((double) size) / arraySize <= 0.25 & arraySize > 10) {
-            YourType[] newArray = (YourType[]) new Object[arraySize / 2];
+            T[] newArray = (T[]) new Object[arraySize / 2];
             if (pointer + size > arraySize) {
                 System.arraycopy(myArray, pointer, newArray, 0, arraySize - pointer);
                 System.arraycopy(myArray, 0, newArray, arraySize - pointer,
@@ -41,7 +41,7 @@ public class ArrayDeque<YourType> {
      */
     private void doubleSize() {
         if (size == arraySize) {
-            YourType[] newArray = (YourType[]) new Object[2 * arraySize];
+            T[] newArray = (T[]) new Object[2 * arraySize];
             if (pointer + size > arraySize) {
                 System.arraycopy(myArray, pointer, newArray, 0, arraySize - pointer);
                 System.arraycopy(myArray, 0, newArray, arraySize - pointer,
@@ -56,22 +56,20 @@ public class ArrayDeque<YourType> {
     }
 
     /**
-     * Adds an item of YourType to the front of the deque.
+     * Adds an item of T to the front of the deque.
      */
-    public void addFirst(YourType item) {
+    public void addFirst(T item) {
         doubleSize();
-        resize();
         pointer = (pointer + arraySize - 1) % arraySize;
         myArray[pointer] = item;
         size += 1;
     }
 
     /**
-     * Adds an item of YourType to the back of the deque.
+     * Adds an item of T to the back of the deque.
      */
-    public void addLast(YourType item) {
+    public void addLast(T item) {
         doubleSize();
-        resize();
         myArray[(pointer + size) % arraySize] = item;
         size += 1;
     }
@@ -104,14 +102,15 @@ public class ArrayDeque<YourType> {
     /**
      * Removes and returns the item at the front of the deque. If no such item exists, returns null.
      */
-    public YourType removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         } else {
-            YourType it = myArray[pointer];
+            T it = myArray[pointer];
             myArray[pointer] = null;
             pointer = (pointer + 1) % arraySize;
             size += -1;
+            resize();
             return it;
         }
     }
@@ -119,13 +118,14 @@ public class ArrayDeque<YourType> {
     /**
      * Removes and returns the item at the back of the deque. If no such item exists, returns null.
      */
-    public YourType removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         } else {
-            YourType it = myArray[(pointer + size - 1) % arraySize];
-            myArray[(pointer + size) % arraySize - 1] = null;
+            T it = myArray[(pointer + size - 1) % arraySize];
+            myArray[(pointer + size - 1) % arraySize] = null;
             size += -1;
+            resize();
             return it;
         }
     }
@@ -135,7 +135,7 @@ public class ArrayDeque<YourType> {
      * If no such item exists, returns null.
      * @param index The index of expected item.
      */
-    public YourType get(int index) {
+    public T get(int index) {
         return myArray[(pointer + index) % arraySize];
     }
 }
