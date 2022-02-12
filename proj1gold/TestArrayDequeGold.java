@@ -8,11 +8,7 @@ public class TestArrayDequeGold {
         ArrayDequeSolution<Integer> aDQsolu1 = new ArrayDequeSolution<>();
         String errorMessage = "";
         String[] operations = {"addFirst(", "addLast(", "removeFirst()", "removeLast()"};
-        for (int i = 0; i < 10; i++) {
-            int randomNumber = StdRandom.uniform(100);
-            aDQstu1.addFirst(randomNumber);
-            aDQsolu1.addFirst(randomNumber);
-        }
+
         for (int i = 0; i < 100; i++) {
             int probability = StdRandom.uniform(4);
             int randomNumber = StdRandom.uniform(100);
