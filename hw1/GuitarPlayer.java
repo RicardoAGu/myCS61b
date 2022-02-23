@@ -43,7 +43,6 @@ public class GuitarPlayer {
         vol = new double[128];
         for (int i = 0; i < strings.length; i++) {
             strings[i] = new GuitarString(440.0 * Math.pow(2.0, (i - 69.0) / 12.0));
-            strings[i].pluck();
             vol[i] = 0.0;
         }
     }
@@ -86,6 +85,9 @@ public class GuitarPlayer {
 
         long tick = 0;
         for (int i = 0; i < track.size(); i++) {
+            System.out.print(i);
+            System.out.print(" / ");
+            System.out.println(track.size());
             MidiEvent event = track.get(i);
             MidiMessage msg = event.getMessage();
             byte[] data = msg.getMessage();
@@ -112,7 +114,6 @@ public class GuitarPlayer {
             if (event.getTick() > tick) {
                 int samplesToSkip = (int) ((event.getTick() - tick) * samplesPerTick);
                 for (int j = 0; j < samplesToSkip; j++) {
-                    System.out.println(j);
                     tic();
                     StdAudio.play(sample());
                 }

@@ -7,8 +7,6 @@ public class GuitarHeroLite {
         /* create two guitar strings, for concert A and C */
         synthesizer.GuitarString stringA = new synthesizer.GuitarString(CONCERT_A);
         synthesizer.GuitarString stringC = new synthesizer.GuitarString(CONCERT_C);
-        stringA.pluck();
-        stringC.pluck();
 
         while (true) {
 
