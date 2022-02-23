@@ -67,12 +67,10 @@ public class GuitarPlayer {
         if (sequence == null) {
             return;
         }
-
         System.out.println("starting performance...");
         initialize();
         double bpm = 120;
         double samplesPerTick = (StdAudio.SAMPLE_RATE * 60.0) / (sequence.getResolution() * bpm);
-
         Track[] tracks = sequence.getTracks();
         Track track = sequence.createTrack();
         int maxSize = 0;
@@ -82,7 +80,6 @@ public class GuitarPlayer {
                 track.add(tracks[i].get(j));
             }
         }
-
         long tick = 0;
         for (int i = 0; i < track.size(); i++) {
             System.out.print(i);
