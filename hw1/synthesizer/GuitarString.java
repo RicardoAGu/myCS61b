@@ -1,7 +1,5 @@
 package synthesizer;
 
-import java.util.Random;
-
 //Make sure this class is public
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final means
@@ -15,7 +13,14 @@ public class GuitarString {
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        buffer = new ArrayRingBuffer<Double>((int) Math.round(SR/frequency));
+        buffer = new ArrayRingBuffer<Double>((int) Math.round(SR / frequency));
+        while (!buffer.isEmpty()) {
+            buffer.dequeue();
+        }
+        while (!buffer.isFull()) {
+            double r = Math.random() - 0.5;
+            buffer.enqueue(r);
+        }
     }
 
 
