@@ -10,7 +10,7 @@ public class TestOffByOne {
     @Test
     public void isCharEqual() {
         char a = 'a';
-        char b = 'A';
+        char b = 'b';
         assertTrue(offByOne.equalChars(a, a));
         assertFalse(offByOne.equalChars(a, b));
     }
